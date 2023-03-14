@@ -260,9 +260,7 @@ body.is-loading:after {
 .ia-project-info .info-option .option-filter-count > dl > dd {
     margin-left: 4rem;
 }
-.ia-project-info .info-option .option-filter-count > dl > dd + dt {
-    /* margin-left: 10rem; */
-}
+.ia-project-info .info-option .option-filter-count > dl > dd + dt {}
 
 
 .ia-section-nav {
