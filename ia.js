@@ -55,8 +55,16 @@ IA.COUNT = {
     delete : 0,
 };
 
-IA.PAGESTATE = {
-    theme : '',
+IA.STATETXT = {
+    wait : '대기',
+    ing : '진행',
+    check : '검수',
+    complete :'완료',
+    delete : '삭제',
+};
+
+IA.PAGEOPTION = {
+    theme : 'light',
     section : 0,
     author : 0,
     state : 0,
@@ -116,12 +124,12 @@ IA.urlParam = (function() {
         const obj = {};
 
         for (const [key, value] of urlParams.entries()) {
-            if( IA.PAGESTATE.hasOwnProperty(key) ) {
+            if( IA.PAGEOPTION.hasOwnProperty(key) ) {
                 obj[key] = value
             }
         }
 
-        Object.assign(IA.PAGESTATE, obj);
+        Object.assign(IA.PAGEOPTION, obj);
     }
 
     function setParams(obj) {
@@ -131,25 +139,25 @@ IA.urlParam = (function() {
         let strUrl;
 
         for (const [key] of urlParams.entries()) {
-            if( !IA.PAGESTATE.hasOwnProperty(key) ) {
+            if( !IA.PAGEOPTION.hasOwnProperty(key) ) {
                 urlParams.delete(key)
             }
         }
 
-        Object.assign(IA.PAGESTATE, obj);
+        Object.assign(IA.PAGEOPTION, obj);
 
-        for (const key in IA.PAGESTATE) {
-            if( IA.PAGESTATE[key] == null || IA.PAGESTATE[key] == 0 ) {
+        for (const key in IA.PAGEOPTION) {
+            if( IA.PAGEOPTION[key] == null || IA.PAGEOPTION[key] == 0 ) {
                 urlParams.delete(key)
             } else {
-                urlParams.set(key, IA.PAGESTATE[key])
+                urlParams.set(key, IA.PAGEOPTION[key])
             }
         }
 
         strParams = urlParams.toString() ? '?' + urlParams.toString() : '';
         strUrl = urlPath + strParams;
 
-        history.pushState(IA.PAGESTATE, null, strUrl);
+        history.pushState(IA.PAGEOPTION, null, strUrl);
     }
 
     return {
@@ -217,26 +225,21 @@ IA.tdState = (function() {
         }
 
         document.querySelectorAll(IA.SELECTOR.td_state).forEach(function(element) {
-            switch(element.innerText.trim()) {
-                case '대기' :
-                    element.classList.add('type1');
-                    break;
-                case '진행' :
-                    element.classList.add('type2');
-                    break;
-                case '검수' :
-                    element.classList.add('type3');
-                    break;
-                case '완료' :
-                    element.classList.add('type4');
-                    break;
-                case '삭제' :
-                    element.classList.add('type5');
-                    element.parentElement.classList.add('del')
-                    break;
-                default :
-                    element.innerText = '대기';
-                    element.classList.add('type1');
+            let stateTxt = element.innerText.trim();
+
+            if( !stateTxt ) {
+                stateTxt = IA.STATETXT.wait;
+                element.innerText = stateTxt;
+            }
+
+            for (const key in IA.STATETXT) {
+                if( IA.STATETXT[key] == stateTxt ) {
+                    element.classList.add(key);
+                }
+            }
+
+            if( stateTxt == IA.STATETXT.delete ) {
+                element.parentElement.classList.add('del');
             }
         });
     }
@@ -395,83 +398,59 @@ IA.infoCount = (function() {
     }
 
     function totalPage() {
-        IA.COUNT = {
-            total : 0,
-            wait : 0,
-            ing : 0,
-            check : 0,
-            complete : 0,
-            delete : 0,
-        }
-
         document.querySelectorAll(IA.SELECTOR.td_state).forEach(function(element) {
-            IA.COUNT.total++;
-            switch(element.innerText.trim()) {
-                case '대기' :
-                    IA.COUNT.wait++;
-                    break;
-                case '진행' :
-                    IA.COUNT.ing++;
-                    break;
-                case '검수' :
-                    IA.COUNT.check++;
-                    break;
-                case '완료' :
-                    IA.COUNT.complete++;
-                    break;
-                case '삭제' :
-                    IA.COUNT.delete++;
-                    break;
-                default : 0;
+            let stateTxt = element.innerText.trim();
+
+            for (const key in IA.STATETXT) {
+                if( IA.STATETXT[key] == stateTxt ) {
+                    IA.COUNT[key]++
+                }
             }
+
+            IA.COUNT.total++;
         });
 
-        document.querySelector('[data-count-state="total"]').innerHTML = IA.COUNT.total;
-        document.querySelector('[data-count-state="wait"]').innerHTML = IA.COUNT.wait;
-        document.querySelector('[data-count-state="ing"]').innerHTML = IA.COUNT.ing;
-        document.querySelector('[data-count-state="check"]').innerHTML = IA.COUNT.check;
-        document.querySelector('[data-count-state="complete"]').innerHTML = IA.COUNT.complete;
-        document.querySelector('[data-count-state="delete"]').innerHTML = IA.COUNT.delete;
-    }
-
-    function filterPage() {
-        let filter_count_total = 0;
-        let filter_count_wait = 0;
-        let filter_count_ing = 0;
-        let filter_count_check = 0;
-        let filter_count_complete = 0;
-        let filter_count_delete = 0;
-
-        document.querySelectorAll(IA.SELECTOR.td_state).forEach(function(element) {
-            if( element.parentElement.hidden != true && element.closest(IA.SELECTOR.section).hidden != true ) {
-                filter_count_total++;
-                switch(element.innerText.trim()) {
-                    case '대기' :
-                        filter_count_wait++;
-                        break;
-                    case '진행' :
-                        filter_count_ing++;
-                        break;
-                    case '검수' :
-                        filter_count_check++;
-                        break;
-                    case '완료' :
-                        filter_count_complete++;
-                        break;
-                    case '삭제' :
-                        filter_count_delete++;
-                        break;
-                    default : 0;
+        document.querySelectorAll('[data-count-state]').forEach(function(element) {
+            for (const key in IA.COUNT) {
+                if( key == element.dataset.countState ) {
+                    element.innerHTML = IA.COUNT[key];
                 }
             }
         });
+    }
 
-        document.querySelector('[data-filter-count-state="total"]').innerHTML = filter_count_total;
-        document.querySelector('[data-filter-count-state="wait"]').innerHTML = filter_count_wait;
-        document.querySelector('[data-filter-count-state="ing"]').innerHTML = filter_count_ing;
-        document.querySelector('[data-filter-count-state="check"]').innerHTML = filter_count_check;
-        document.querySelector('[data-filter-count-state="complete"]').innerHTML = filter_count_complete;
-        document.querySelector('[data-filter-count-state="delete"]').innerHTML = filter_count_delete;
+    function filterPage() {
+        const FILTER_COUNT = {};
+
+        Object.assign(FILTER_COUNT, IA.COUNT);
+
+        for(const key in FILTER_COUNT) {
+            FILTER_COUNT[key] = 0;
+        }
+
+        document.querySelectorAll(IA.SELECTOR.td_state).forEach(function(element) {
+            let stateTxt = element.innerText.trim();
+
+            if( element.parentElement.hidden == true || element.closest(IA.SELECTOR.section).hidden == true ) {
+                return;
+            }
+
+            for (const key in IA.STATETXT) {
+                if( IA.STATETXT[key] == stateTxt ) {
+                    FILTER_COUNT[key]++
+                }
+            }
+
+            FILTER_COUNT.total++;
+        });
+
+        document.querySelectorAll('[data-filter-count-state]').forEach(function(element) {
+            for (const key in FILTER_COUNT) {
+                if( key == element.dataset.filterCountState ) {
+                    element.innerHTML = FILTER_COUNT[key];
+                }
+            }
+        });
     }
 
     return {
@@ -490,12 +469,12 @@ IA.filter = (function() {
         let filter_author = document.querySelector('[data-filter="author"]');
         let filter_state = document.querySelector('[data-filter="state"]');
 
-        if( IA.PAGESTATE.author || IA.PAGESTATE.state ) {
-            if( IA.PAGESTATE.author && filter_author.options[IA.PAGESTATE.author] ) {
-                filter_author.options[IA.PAGESTATE.author].selected = true;
+        if( IA.PAGEOPTION.author || IA.PAGEOPTION.state ) {
+            if( IA.PAGEOPTION.author && filter_author.options[IA.PAGEOPTION.author] ) {
+                filter_author.options[IA.PAGEOPTION.author].selected = true;
             }
-            if( IA.PAGESTATE.state && filter_state.options[IA.PAGESTATE.state]) {
-                filter_state.options[IA.PAGESTATE.state].selected = true;
+            if( IA.PAGEOPTION.state && filter_state.options[IA.PAGEOPTION.state]) {
+                filter_state.options[IA.PAGEOPTION.state].selected = true;
             }
             change();
         }
@@ -588,9 +567,9 @@ IA.theme = (function() {
         if( !theme ) {
             return;
         }
-        if( IA.PAGESTATE.theme ) {
-            if( theme.querySelector('option[value="' + IA.PAGESTATE.theme + '"]') ) {
-                theme.querySelector('option[value="' + IA.PAGESTATE.theme + '"]').selected = true;
+        if( IA.PAGEOPTION.theme ) {
+            if( theme.querySelector('option[value="' + IA.PAGEOPTION.theme + '"]') ) {
+                theme.querySelector('option[value="' + IA.PAGEOPTION.theme + '"]').selected = true;
             }
             change();
         }
@@ -644,8 +623,8 @@ IA.sectionNav = (function() {
 
         createNav();
 
-        if( IA.PAGESTATE.section && document.querySelectorAll(IA.SELECTOR.nav_btn)[IA.PAGESTATE.section] ) {
-            navBtnClick(document.querySelectorAll(IA.SELECTOR.nav_btn)[IA.PAGESTATE.section]);
+        if( IA.PAGEOPTION.section && document.querySelectorAll(IA.SELECTOR.nav_btn)[IA.PAGEOPTION.section] ) {
+            navBtnClick(document.querySelectorAll(IA.SELECTOR.nav_btn)[IA.PAGEOPTION.section]);
         } else {
             IA.urlParam.setParams({
                 section : 0
