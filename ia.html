@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>IA</title>
+    <link rel="stylesheet" href="ia.css">
+    <!-- <script src="jquery-3.6.3.min.js"></script> -->
+    <script src="ia.js"></script>
+</head>
+<body>
+<div class="is-wrapper">
+    <header class="ia-header">
+        <h1 class="ia-project-title"><a href="./ia.html">Project IA</a></h1>
+        <div class="ia-project-info">
+            <div class="info-count">
+                <dl>
+                    <dt>전체</dt>
+                    <dd data-count-state="total"></dd>
+                    <dt>대기</dt>
+                    <dd data-count-state="wait"></dd>
+                    <dt>진행</dt>
+                    <dd data-count-state="ing"></dd>
+                    <dt>검수</dt>
+                    <dd data-count-state="check"></dd>
+                    <dt>완료</dt>
+                    <dd data-count-state="complete"></dd>
+                    <dt>삭제</dt>
+                    <dd data-count-state="delete"></dd>
+                </dl>
+            </div>
+            <div class="info-option">
+                <div class="option-filter">
+                    <div class="item">
+                        <select data-filter="author" onchange="IA.filter.change(this);">
+                            <option value="0">담당자</option>
+                            <option value="1">홍길동</option>
+                            <option value="2">김철수</option>
+                            <option value="3">김영희</option>
+                            <option value="4">미지정</option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <select data-filter="state" onchange="IA.filter.change(this);">
+                            <option value="0">상태</option>
+                            <option value="1">대기</option>
+                            <option value="2">진행</option>
+                            <option value="3">검수</option>
+                            <option value="4">완료</option>
+                            <option value="5">삭제</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="option-filter-count">
+                    <dl>
+                        <dt>전체</dt>
+                        <dd data-filter-count-state="total"></dd>
+                        <dt>대기</dt>
+                        <dd data-filter-count-state="wait"></dd>
+                        <dt>진행</dt>
+                        <dd data-filter-count-state="ing"></dd>
+                        <dt>검수</dt>
+                        <dd data-filter-count-state="check"></dd>
+                        <dt>완료</dt>
+                        <dd data-filter-count-state="complete"></dd>
+                        <dt>삭제</dt>
+                        <dd data-filter-count-state="delete"></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="ia-theme">
+            <select data-ia="theme" onchange="IA.theme.change(this);">
+                <option value="0">테마</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="ia-body">
+
+        <div data-include="_ia_test.html">section1</div>
+        <div data-include="_ia_test2.html">section2</div>
+        <div data-include="_ia_test3.html">section3</div>
+        <div data-include="_ia_test4.html">section4</div>
+
+    </main>
+</div>
+</body>
+</html>

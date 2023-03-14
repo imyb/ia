@@ -1,0 +1,513 @@
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+html, body, p, ol, ul, li, dl, dt, dd, blockquote, figure, fieldset, legend, textarea, pre, iframe, hr, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+ul {
+    list-style: none;
+}
+
+button,
+input,
+select {
+    margin: 0;
+}
+
+html {
+    font-size: 6.25%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Roboto, 'Malgun Gothic', '맑은 고딕', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1600%;
+    font-weight: 400;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+img,
+video {
+    height: auto;
+    max-width: 100%;
+}
+
+iframe {
+    border: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td,
+th {
+    padding: 0;
+}
+
+
+
+/* IA */
+html {
+    --default-color : #000;
+    --default-background : #fff;
+    --header-bg : rgba(255, 255, 255, 0.8);
+    --header-border : transparent;
+    --project-title-color : #000;
+    --nav-color : #999;
+    --nav-bg : #f2f2f2;
+    --nav-active-color : #fff;
+    --nav-active-bg : #000;
+    --nav-border : #eee;
+    --option-bg : #eee;
+    --option-select-border : #999;
+    --option-select-bg : #fff;
+    --option-select-color : #999;
+    --option-select-active-border : #000;
+    --option-select-active-shadow : #000;
+    --option-select-active-bg : #fff;
+    --option-select-active-color : #000;
+    --table-bg : #fff;
+    --table-border : #ddd;
+    --th-bg : #f8f8f8;
+    --tr-hover-bg : #fafafa;
+    --tr-active-bg : #eee;
+    --tr-focus-border : #000;
+    --td-url : #1155cc;
+    --td-note-btn-border : #000;
+    --td-note-btn-bg : #eee;
+    --td-note-line : #f5f5f5;
+    --td-state-color-type1 : #9e9e9e;
+    --td-state-color-type2 : #87c297;
+    --td-state-color-type3 : #f1c232;
+    --td-state-color-type4 : #1881c5;
+    --td-state-color-type5 : var(--default-color);
+    --td-before-color : #999;
+    --loading-bg : rgba(255, 255, 255, 0.8);
+}
+html.theme-dark {
+    --default-color : #999;
+    --default-background : #141414;
+    --header-bg : rgba(20, 20, 20, 0.8);
+    --header-border : #333;
+    --project-title-color : #fff;
+    --nav-color : #999;
+    --nav-bg : #333;
+    --nav-active-color : #000;
+    --nav-active-bg : #fff;
+    --nav-border : #333;
+    --option-bg : #333;
+    --option-select-border : #666;
+    --option-select-bg : #333;
+    --option-select-color : #999;
+    --option-select-active-border : #fff;
+    --option-select-active-shadow : #fff;
+    --option-select-active-bg : transparent;
+    --option-select-active-color : #fff;
+    --table-bg : #202020;
+    --table-border : #141414;
+    --th-bg : #444;
+    --tr-hover-bg : #262626;
+    --tr-active-bg : #333;
+    --tr-focus-border : #c1c1c1;
+    --td-url : #5f769f;
+    --td-note-btn-border : #333;
+    --td-note-btn-bg : #999;
+    --td-note-line : #555;
+    --td-before-color : #666;
+    --loading-bg : rgba(0, 0, 0, 0.8);
+}
+body {
+    color: var(--default-color);
+    background-color: var(--default-background);
+}
+body.is-loading:after {
+    z-index: 1000;
+    content: 'loading...';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--loading-bg);
+}
+
+.is-wrapper {}
+
+.ia-header {
+    z-index: 900;
+    position: sticky;
+    top: 0;
+    padding: 8rem 10rem;
+    border-bottom: 1rem solid var(--header-border);
+    background-color: var(--header-bg);
+    box-shadow: 0px -10px 20px rgb(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.ia-theme {
+    position: absolute;
+    top: 10rem;
+    right: 10rem;
+}
+.ia-theme select {
+    display: block;
+    border-radius: 4rem;
+    border: 1px solid var(--option-select-border);
+    background-color: var(--option-select-bg);
+    font-size: 12rem;
+    color: var(--option-select-color);
+}
+
+.ia-project-title {
+    margin-bottom: 5rem;
+    font-size: 24rem;
+    color: var(--project-title-color);
+}
+.ia-project-title a {
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+.ia-project-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8rem;
+}
+
+.ia-project-info .info-count {
+    margin-right: 10rem;
+    padding: 6rem 0;
+    font-size: 13rem;
+}
+.ia-project-info .info-count > dl {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -4rem
+}
+.ia-project-info .info-count > dl > dt {
+    margin-left: 4rem;
+    color: #666;
+}
+.ia-project-info .info-count > dl > dd {
+    margin-left: 4rem;
+    font-weight: bold;
+}
+.ia-project-info .info-count > dl > dd + dt {
+    /* margin-left: 10rem; */
+}
+
+.ia-project-info .info-option {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: auto;
+    padding: 3rem 3rem;
+    border-radius: 8rem;
+    background: var(--option-bg);
+}
+.ia-project-info .info-option [class*="option-"] {
+    margin: 3rem 5rem;
+}
+
+.ia-project-info .info-option .option-filter {
+    display: flex;
+    align-items: center;
+}
+.ia-project-info .info-option .option-filter .item {}
+.ia-project-info .info-option .option-filter .item + .item {
+    margin-left: 5rem;
+}
+.ia-project-info .info-option .option-filter .item select {
+    display: block;
+    border-radius: 4rem;
+    border: 1px solid var(--option-select-border);
+    background-color: var(--option-select-bg);
+    font-size: 12rem;
+    color: var(--option-select-color);
+}
+.ia-project-info .info-option .option-filter select.is-selected {
+    border: 1rem solid var(--option-select-active-border);
+    box-shadow: 0 0 4rem var(--option-select-active-shadow);
+    background-color: var(--option-select-active-bg);
+    color: var(--option-select-active-color);
+}
+.ia-project-info .info-option .option-filter-count {
+    font-size: 11rem;
+}
+.ia-project-info .info-option .option-filter-count > dl {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -4rem;
+}
+.ia-project-info .info-option .option-filter-count > dl > dt {
+    margin-left: 4rem;
+    color: #666;
+}
+.ia-project-info .info-option .option-filter-count > dl > dd {
+    margin-left: 4rem;
+}
+.ia-project-info .info-option .option-filter-count > dl > dd + dt {
+    /* margin-left: 10rem; */
+}
+
+
+.ia-section-nav {
+    margin-top: 8rem;
+    border-top: 1rem solid var(--nav-border);
+}
+.ia-section-nav > ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 4rem -4rem -4rem -4rem;
+}
+.ia-section-nav > ul > li {
+    margin: 2rem 4rem;
+}
+.ia-section-nav > ul > li > a {
+    display: flex;
+    align-items: center;
+    height: 22rem;
+    padding: 0 6rem;
+    border-radius: 8rem;
+    background-color: var(--nav-bg);
+    font-size: 11rem;
+    color: var(--nav-color);
+    text-decoration: none;
+}
+.ia-section-nav > ul > li.is-active > a {
+    background-color: var(--nav-active-bg);
+    font-weight: bold;
+    color: var(--nav-active-color);
+}
+
+
+
+.ia-body {
+    padding: 20rem 10rem;
+}
+.ia-section {}
+.ia-section:not([hidden]) + .ia-section {
+    margin-top: 30rem;
+}
+.ia-section .ia-section-heading {}
+.ia-section .ia-section-title {
+    margin-bottom: 8rem;
+    font-size: 18rem;
+}
+.ia-section .ia-section-list {}
+.ia-section .ia-section-table {
+    width: 100%;
+}
+.ia-section .ia-section-table th,
+.ia-section .ia-section-table td {
+    padding: 2rem 4rem;
+    border: 1rem solid var(--table-border);
+    font-size: 11rem;
+    word-break: break-all;
+}
+
+.ia-section .ia-section-table thead {
+    z-index: 2;
+    position: sticky;
+    top: var(--header-height);
+    box-shadow: inset 0 1px 0 var(--table-border), inset 0 -1px 0 var(--table-border);
+}
+
+
+.ia-section .ia-section-table thead th {}
+.ia-section .ia-section-table thead th.note {
+    position: relative;
+}
+.ia-section .ia-section-table thead th.note > button {
+    position: absolute;
+    top: 50%;
+    left: 4rem;
+    width: 16rem;
+    height: 16rem;
+    margin-top: -8rem;
+    padding: 0;
+    border: 1rem solid var(--td-note-btn-border);
+    background: var(--td-note-btn-bg);
+}
+
+.ia-section .ia-section-table tbody tr {
+    background-color: var(--table-bg);
+}
+.ia-section .ia-section-table tbody tr:first-child td {
+    border-top: 0;
+}
+
+.ia-section .ia-section-table th {
+    height: 30rem;
+    background-color: var(--th-bg);
+    text-align: center;
+    white-space: nowrap;
+}
+.ia-section .ia-section-table td {}
+.ia-section .ia-section-table td a {
+  color: var(--td-url);
+}
+
+.ia-section .ia-section-table td.no,
+.ia-section .ia-section-table td.type,
+.ia-section .ia-section-table td.author,
+.ia-section .ia-section-table td.state,
+.ia-section .ia-section-table td.date {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.ia-section .ia-section-table td.state {
+    width: 60rem;
+}
+.ia-section .ia-section-table td.state.type1 {
+    color: var(--td-state-color-type1);
+}
+.ia-section .ia-section-table td.state.type2 {
+    color: var(--td-state-color-type2);
+}
+.ia-section .ia-section-table td.state.type3 {
+    color: var(--td-state-color-type3);
+}
+.ia-section .ia-section-table td.state.type4 {
+    color: var(--td-state-color-type4);
+}
+.ia-section .ia-section-table td.state.type5 {
+    color: var(--td-state-color-type5);
+}
+
+.ia-section .ia-section-table td.note {}
+.ia-section .ia-section-table td.note.has-more {
+    position: relative;
+}
+.ia-section .ia-section-table td.note.has-more > button {
+    position: absolute;
+    top: 1rem;
+    left: 4rem;
+    width: 16rem;
+    height: 16rem;
+    margin: 0;
+    padding: 0;
+    border: 1rem solid var(--td-note-btn-border);
+    background: var(--td-note-btn-bg);
+}
+.ia-section .ia-section-table td.note.has-more > div {
+    margin-left: 20rem;
+}
+.ia-section .ia-section-table td.note.has-more > div:not(:last-child) {
+    display: none;
+}
+.ia-section .ia-section-table td.note.has-more.is-open {}
+.ia-section .ia-section-table td.note.has-more.is-open > div {
+    display: block;
+}
+.ia-section .ia-section-table td.note.has-more.is-open > div + div {
+    margin-top: 2rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--td-note-line);
+}
+
+.ia-section table tr.del {}
+.ia-section table tr.del td {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+.ia-section table tr.del a {
+    text-decoration: none;
+}
+
+.ia-section table tr:hover {
+    background: var(--tr-hover-bg);
+}
+.ia-section table tr.active {
+    background: var(--tr-active-bg);
+}
+.ia-section table tr.focus {
+    z-index: 1;
+    position: relative;
+    box-shadow: inset 0 0 0 2rem var(--tr-focus-border);
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .ia-project-info .info-count {
+        width: 100%;
+        margin: 0;
+    }
+    .ia-project-info .info-option {
+        margin: 0;
+    }
+
+    .ia-section .ia-section-table thead {
+        display: none;
+    }
+    .ia-section .ia-section-table tbody tr {
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10rem;
+    }
+    .ia-section .ia-section-table tbody tr:first-child {
+        margin-top: 0;
+    }
+    .ia-section .ia-section-table tbody td {
+        position: relative;
+        min-height: 20rem;
+        border: 0;
+    }
+    .ia-section .ia-section-table td:before {
+        margin-right: 3rem;
+        color: var(--td-before-color);
+    }
+    .ia-section .ia-section-table td.no:before { content: 'NO: '; }
+    .ia-section .ia-section-table td.d2:before { content: 'D2: '; }
+    .ia-section .ia-section-table td.d3:before { content: 'D3: '; }
+    .ia-section .ia-section-table td.d4:before { content: 'D4: '; }
+    .ia-section .ia-section-table td.d5:before { content: 'D5: '; }
+    .ia-section .ia-section-table td.d6:before  { content: 'D6: '; }
+    .ia-section .ia-section-table td.tit:before { content: '화면명: '; }
+    .ia-section .ia-section-table td.type:before { content: '타입: '; }
+    .ia-section .ia-section-table td.code:before { content: '화면ID: '; }
+    .ia-section .ia-section-table td.url:before { content: 'URL: '; }
+    .ia-section .ia-section-table td.author:before { content: '담당: '; }
+    .ia-section .ia-section-table td.state:before { content: '상태: '; }
+    .ia-section .ia-section-table td.date:before { content: '날짜: '; }
+    .ia-section .ia-section-table td.note:before { content: '노트: '; }
+
+    .ia-section .ia-section-table td.no {
+        flex: 1 0 calc(100% - 4rem);
+        margin: 2rem;
+        background: var(--th-bg);
+        text-align: left;
+    }
+
+    .ia-section .ia-section-table td.note {
+        min-width: 40rem;
+    }
+    .ia-section .ia-section-table td.note:before {
+        position: absolute;
+        top: 3rem;
+        left: 4rem;
+    }
+    .ia-section .ia-section-table td.note.has-more > button {
+        left: 30rem;
+    }
+    .ia-section .ia-section-table td.note.has-more > div {
+        margin-left: 45rem;
+    }
+}
