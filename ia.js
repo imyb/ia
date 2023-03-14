@@ -2,6 +2,7 @@ const IA = {};
 
 document.addEventListener('DOMContentLoaded', function() {
     IA.loading.show();
+    
     IA.includeHTML.init(function() {
         IA.urlParam.init();
         IA.tdNumber.init();
