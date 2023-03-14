@@ -1,4 +1,4 @@
-var IA = {};
+const IA = {};
 
 document.addEventListener('DOMContentLoaded', function() {
     IA.loading.show();
@@ -64,7 +64,7 @@ IA.PAGESTATE = {
 
 IA.includeHTML = (function() {
     function init(callback) {
-        var include_tags = document.querySelectorAll('[data-include]');
+        let include_tags = document.querySelectorAll('[data-include]');
 
         if( include_tags.length == 0 ) {
             IA.loading.hide();
@@ -72,37 +72,38 @@ IA.includeHTML = (function() {
             return;
         }
 
-        include_tags.forEach(function(element, i) {
-            var include_file = element.dataset.include;
-            var _temp1 = document.createElement("div");
-            var _temp2 = document.createElement("div");
-            var xhttp;
-
-            if( include_file ) {
-                xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        _temp1.innerHTML = this.responseText;
-                        _temp1.querySelectorAll('.ia-section').forEach(function(section) {
-                            _temp2.innerHTML += section.outerHTML;
-                        });
-                        element.outerHTML = _temp2.innerHTML;
-
-                        _temp1 = null;
-                        _temp2 = null;
-
-                        if( include_tags.length <= i+1 ) {
-                            setTimeout(function() {
-                                callback();
-                            });
-                        }
-                    }
-                };
-                xhttp.open('GET', include_file, true);
-                xhttp.send();
-            }
-        });
+        fetchInclude(include_tags, callback)
     }
+
+    async function fetchInclude(include_tags, callback) {
+        for(const includeElement of include_tags) {
+            const include_file = includeElement.dataset.include;
+
+            await fetch(include_file, {})
+                .then(response => {
+                    if (!response.ok) {
+                        return console.log("HTTP-Error: " + response.status);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    let _tempHtml1 = document.createElement("div");
+                    let _tempHtml2 = document.createElement("div");
+
+                    _tempHtml1.innerHTML = data;
+
+                    _tempHtml1.querySelectorAll('.ia-section').forEach(function(section) {
+                        _tempHtml2.innerHTML += section.outerHTML;
+                    });
+
+                    includeElement.outerHTML = _tempHtml2.innerHTML;
+
+                    _tempHtml1 = null;
+                    _tempHtml2 = null;
+                });
+        }
+        await callback();
+    };
 
     return {
         init : init,
@@ -111,10 +112,10 @@ IA.includeHTML = (function() {
 
 IA.urlParam = (function() {
     function init() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var obj = {};
+        const urlParams = new URLSearchParams(window.location.search);
+        const obj = {};
 
-        for (var [key, value] of urlParams.entries()) {
+        for (const [key, value] of urlParams.entries()) {
             if( IA.PAGESTATE.hasOwnProperty(key) ) {
                 obj[key] = value
             }
@@ -124,12 +125,12 @@ IA.urlParam = (function() {
     }
 
     function setParams(obj) {
-        var urlParams = new URLSearchParams(window.location.search);
-        var urlPath = window.location.origin + window.location.pathname;
-        var strParams;
-        var strUrl;
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlPath = window.location.origin + window.location.pathname;
+        let strParams;
+        let strUrl;
 
-        for (var [key] of urlParams.entries()) {
+        for (const [key] of urlParams.entries()) {
             if( !IA.PAGESTATE.hasOwnProperty(key) ) {
                 urlParams.delete(key)
             }
@@ -137,7 +138,7 @@ IA.urlParam = (function() {
 
         Object.assign(IA.PAGESTATE, obj);
 
-        for (var key in IA.PAGESTATE) {
+        for (const key in IA.PAGESTATE) {
             if( IA.PAGESTATE[key] == null || IA.PAGESTATE[key] == 0 ) {
                 urlParams.delete(key)
             } else {
@@ -159,7 +160,7 @@ IA.urlParam = (function() {
 
 IA.tdNumber = (function() {
     function init() {
-        var count = 1;
+        let count = 1;
 
         if( !document.querySelector(IA.SELECTOR.tbody_tr) ) {
             return;
@@ -196,8 +197,8 @@ IA.tdUrl = (function() {
         }
 
         document.querySelectorAll(IA.SELECTOR.td_url).forEach(function(element) {
-            var anchor = element.querySelector('a');
-            var href = anchor.getAttribute('href');
+            let anchor = element.querySelector('a');
+            let href = anchor.getAttribute('href');
 
             anchor.setAttribute('target', '_blank');
             anchor.innerHTML = href;
@@ -281,7 +282,7 @@ IA.tdNote = (function() {
     }
 
     function tdMoreBtnClick(element) {
-        var _this = element;
+        let _this = element;
 
         if( _this.parentElement.classList.contains('is-open') ) {
             _moreClose(_this);
@@ -291,8 +292,8 @@ IA.tdNote = (function() {
     }
 
     function thMoreBtnClick(element) {
-        var _this = element;
-        var this_tdNotes = _this.closest(IA.SELECTOR.table).querySelectorAll(IA.SELECTOR.td_note);
+        let _this = element;
+        let this_tdNotes = _this.closest(IA.SELECTOR.table).querySelectorAll(IA.SELECTOR.td_note);
 
         if( _this.parentElement.classList.contains('is-open') ) {
             _moreClose(_this);
@@ -351,7 +352,7 @@ IA.trActive = (function() {
     }
 
     function trClick(element) {
-        var _this = element;
+        let _this = element;
 
         if( !_this.classList.contains('active') ) {
             _this.classList.add('active');
@@ -434,12 +435,12 @@ IA.infoCount = (function() {
     }
 
     function filterPage() {
-        var filter_count_total = 0;
-        var filter_count_wait = 0;
-        var filter_count_ing = 0;
-        var filter_count_check = 0;
-        var filter_count_complete = 0;
-        var filter_count_delete = 0;
+        let filter_count_total = 0;
+        let filter_count_wait = 0;
+        let filter_count_ing = 0;
+        let filter_count_check = 0;
+        let filter_count_complete = 0;
+        let filter_count_delete = 0;
 
         document.querySelectorAll(IA.SELECTOR.td_state).forEach(function(element) {
             if( element.parentElement.hidden != true && element.closest(IA.SELECTOR.section).hidden != true ) {
@@ -486,8 +487,8 @@ IA.filter = (function() {
             return;
         }
 
-        var filter_author = document.querySelector('[data-filter="author"]');
-        var filter_state = document.querySelector('[data-filter="state"]');
+        let filter_author = document.querySelector('[data-filter="author"]');
+        let filter_state = document.querySelector('[data-filter="state"]');
 
         if( IA.PAGESTATE.author || IA.PAGESTATE.state ) {
             if( IA.PAGESTATE.author && filter_author.options[IA.PAGESTATE.author] ) {
@@ -501,17 +502,17 @@ IA.filter = (function() {
     }
 
     function change() {
-        var filter_author = document.querySelector('[data-filter="author"]');
-        var filter_state = document.querySelector('[data-filter="state"]');
-        var filter_author_value = filter_author.value;
-        var filter_state_value = filter_state.value;
-        var filter_author_text = filter_author.options[filter_author_value].text.trim();
-        var filter_state_text = filter_state.options[filter_state_value].text.trim();
+        let filter_author = document.querySelector('[data-filter="author"]');
+        let filter_state = document.querySelector('[data-filter="state"]');
+        let filter_author_value = filter_author.value;
+        let filter_state_value = filter_state.value;
+        let filter_author_text = filter_author.options[filter_author_value].text.trim();
+        let filter_state_text = filter_state.options[filter_state_value].text.trim();
 
         document.querySelectorAll(IA.SELECTOR.tbody_tr).forEach(function(element) {
 
-            var td_author_text = element.querySelector(IA.SELECTOR.td_author).innerText.trim();
-            var td_state_text = element.querySelector(IA.SELECTOR.td_state).innerText.trim();
+            let td_author_text = element.querySelector(IA.SELECTOR.td_author).innerText.trim();
+            let td_state_text = element.querySelector(IA.SELECTOR.td_state).innerText.trim();
 
             if( (td_author_text == filter_author_text || filter_author_value == 0) && (td_state_text == filter_state_text || filter_state_value == 0) ) {
                 element.hidden = false;
@@ -548,7 +549,7 @@ IA.filter = (function() {
 })();
 
 IA.header = (function() {
-    var header_height = 0;
+    let header_height = 0;
 
     function init() {
         if( !document.querySelector(IA.SELECTOR.header) ) {
@@ -582,7 +583,7 @@ IA.header = (function() {
 IA.theme = (function() {
 
     function init() {
-        var theme = document.querySelector('[data-ia="theme"]');
+        let theme = document.querySelector('[data-ia="theme"]');
 
         if( !theme ) {
             return;
@@ -592,12 +593,11 @@ IA.theme = (function() {
                 theme.querySelector('option[value="' + IA.PAGESTATE.theme + '"]').selected = true;
             }
             change();
-            console.log('theme')
         }
     }
 
     function change() {
-        var theme = document.querySelector('[data-ia="theme"]');
+        let theme = document.querySelector('[data-ia="theme"]');
 
         theme.querySelectorAll('option').forEach(function(opt) {
             document.querySelector('html').classList.remove('theme-' + opt.value);
@@ -625,7 +625,7 @@ IA.sectionInfo = (function() {
         }
 
         document.querySelectorAll(IA.SELECTOR.section).forEach(function(element) {
-            var page_num = element.querySelectorAll(IA.SELECTOR.tbody_tr).length;
+            let page_num = element.querySelectorAll(IA.SELECTOR.tbody_tr).length;
 
             element.querySelector(IA.SELECTOR.section_title).dataset.count = page_num;
         });
@@ -653,6 +653,7 @@ IA.sectionNav = (function() {
         }
 
         document.querySelectorAll(IA.SELECTOR.nav_btn).forEach(function(nav_btn, i) {
+
             nav_btn.addEventListener('click', function(e) {
                 navBtnClick(this);
             })
@@ -663,9 +664,9 @@ IA.sectionNav = (function() {
         document.querySelector(IA.SELECTOR.header).insertAdjacentHTML('beforeend', '<div class="ia-section-nav"><ul><li class="is-active"><a href="javascript:void(0);" data-section-num="0">전체 (' + IA.COUNT.total + ')</li></ul></div>');
 
         document.querySelectorAll(IA.SELECTOR.section).forEach(function(section, i) {
-            var section_title = section.querySelector(IA.SELECTOR.section_title).innerText;
-            var section_count = section.querySelector(IA.SELECTOR.section_title).dataset.count;
-            var section_num = i+1;
+            let section_title = section.querySelector(IA.SELECTOR.section_title).innerText;
+            let section_count = section.querySelector(IA.SELECTOR.section_title).dataset.count;
+            let section_num = i+1;
 
             document.querySelector(IA.SELECTOR.nav_ul).insertAdjacentHTML('beforeend', '<li><a href="javascript:void(0);" data-section-num=' + section_num + '>' + section_title + ' (' + section_count + ')</li>');
             section.dataset.sectionNum = section_num;
@@ -673,8 +674,8 @@ IA.sectionNav = (function() {
     }
 
     function navBtnClick(element) {
-        var _this = element;
-        var _this_section_num = _this.dataset.sectionNum;
+        let _this = element;
+        let _this_section_num = _this.dataset.sectionNum;
 
         document.querySelectorAll(IA.SELECTOR.nav_btn).forEach(function(nav_btn) {
             nav_btn.parentElement.classList.remove('is-active');
