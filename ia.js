@@ -1,3 +1,5 @@
+"use strict";
+
 const IA = {};
 
 document.addEventListener('DOMContentLoaded', function() {
