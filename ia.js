@@ -1,6 +1,5 @@
 "use strict";
 
-
 const IA = {};
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -16,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
         IA.infoCount.init();
         IA.sectionInfo.init();
         IA.sectionNav.init();
-        IA.header.init();
+        1IA.header.init();
         IA.theme.init();
-        
+
         setTimeout(function() {
             IA.loading.hide();
         }, 600);
