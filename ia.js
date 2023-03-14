@@ -4,7 +4,7 @@ const IA = {};
 
 document.addEventListener('DOMContentLoaded', function() {
     IA.loading.show();
-    
+
     IA.includeHTML.init(function() {
         IA.urlParam.init();
         IA.tdNumber.init();
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         IA.infoCount.init();
         IA.sectionInfo.init();
         IA.sectionNav.init();
-        1IA.header.init();
+        IA.header.init();
         IA.theme.init();
 
         setTimeout(function() {
