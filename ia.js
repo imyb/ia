@@ -207,11 +207,11 @@ IA.tdUrl = (function() {
         }
 
         document.querySelectorAll(IA.SELECTOR.td_url).forEach(function(element) {
-            let anchor = element.querySelector('a');
-            let href = anchor.getAttribute('href');
-
-            anchor.setAttribute('target', '_blank');
-            anchor.innerHTML = href;
+            element.querySelectorAll('a').forEach(function(anchor) {
+                let href = anchor.getAttribute('href');
+                anchor.setAttribute('target', '_blank');
+                anchor.innerHTML = href;
+            });
         });
     }
 
@@ -260,14 +260,12 @@ IA.tdNote = (function() {
         document.querySelectorAll(IA.SELECTOR.td_note).forEach(function(td_note) {
             if( td_note.children.length > 1 ) {
                 td_note.classList.add('has-more');
-                td_note.insertAdjacentHTML('afterbegin', '<button type="button" class="btn_more">+</button>');
+                td_note.insertAdjacentHTML('afterbegin', '<button type="button" class="btn-more">+</button>');
                 td_note.closest(IA.SELECTOR.table).dataset.hasMore = true;
-            } else {
-                td_note.closest(IA.SELECTOR.table).dataset.hasMore = false;
             }
 
-            if( td_note.querySelector('.btn_more') ) {
-                td_note.querySelector('.btn_more').addEventListener('click', function() {
+            if( td_note.querySelector('.btn-more') ) {
+                td_note.querySelector('.btn-more').addEventListener('click', function() {
                     tdMoreBtnClick(this);
                 });
             }
@@ -275,11 +273,11 @@ IA.tdNote = (function() {
 
         document.querySelectorAll(IA.SELECTOR.th_note).forEach(function(th_note) {
             if( th_note.closest(IA.SELECTOR.table).dataset.hasMore == 'true' ) {
-                th_note.insertAdjacentHTML('afterbegin', '<button type="button" class="btn_more">+</button>');
+                th_note.insertAdjacentHTML('afterbegin', '<button type="button" class="btn-more">+</button>');
             }
 
-            if( th_note.querySelector('.btn_more') ) {
-                th_note.querySelector('.btn_more').addEventListener('click', function() {
+            if( th_note.querySelector('.btn-more') ) {
+                th_note.querySelector('.btn-more').addEventListener('click', function() {
                     thMoreBtnClick(this);
                 });
             }
@@ -294,6 +292,8 @@ IA.tdNote = (function() {
         } else {
             _moreOpen(_this);
         }
+
+        thMoreBtnChage(_this);
     }
 
     function thMoreBtnClick(element) {
@@ -305,7 +305,7 @@ IA.tdNote = (function() {
 
             this_tdNotes.forEach(function(element) {
                 if( element.classList.contains('has-more') ) {
-                    _moreClose(element.querySelector('.btn_more'));
+                    _moreClose(element.querySelector('.btn-more'));
                 }
             });
         } else {
@@ -313,9 +313,32 @@ IA.tdNote = (function() {
 
             this_tdNotes.forEach(function(element) {
                 if( element.classList.contains('has-more') ) {
-                    _moreOpen(element.querySelector('.btn_more'));
+                    _moreOpen(element.querySelector('.btn-more'));
                 }
             });
+        }
+    }
+
+    function thMoreBtnChage(element) {
+        let _this = element;
+        let this_tdNotes = _this.closest(IA.SELECTOR.table).querySelectorAll(IA.SELECTOR.td_note);
+        let this_thNote = _this.closest(IA.SELECTOR.table).querySelector(IA.SELECTOR.th_note);
+        let count_tdNote_open = 0;
+        let count_tdNote_hasMore = 0;
+
+        this_tdNotes.forEach(function(tdNote) {
+            if( tdNote.classList.contains('is-open') ) {
+                count_tdNote_open++;
+            };
+            if( tdNote.classList.contains('has-more') ) {
+                count_tdNote_hasMore++;
+            }
+        });
+
+        if( count_tdNote_hasMore == count_tdNote_open ) {
+            _moreOpen(this_thNote.querySelector('.btn-more'));
+        } else {
+            _moreClose(this_thNote.querySelector('.btn-more'));
         }
     }
 
@@ -512,6 +535,12 @@ IA.filter = (function() {
             filter_state.classList.add('is-selected');
         } else {
             filter_state.classList.remove('is-selected');
+        }
+
+        if( filter_author.value > 0 || filter_state.value > 0) {
+            document.querySelector('.info-option').classList.add('is-selected');
+        } else {
+            document.querySelector('.info-option').classList.remove('is-selected');
         }
 
         IA.urlParam.setParams({
