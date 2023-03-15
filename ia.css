@@ -179,12 +179,23 @@ body.is-loading:after {
     box-shadow: 0px -10px 20px rgb(0, 0, 0, 0.4);
     backdrop-filter: blur(5px);
 }
-
-.ia-theme {
+.ia-quick {
+    display: flex;
+    align-items: center;
     position: absolute;
     top: 10rem;
     right: 10rem;
 }
+.ia-link {
+    margin-right: 10rem;
+}
+.ia-link a {
+    display: inline-block;
+    padding: 4rem;
+    color: var(--default-color);
+    font-size: 12rem;
+}
+.ia-theme {}
 .ia-theme select {
     display: block;
     border-radius: 4rem;

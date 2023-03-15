@@ -7,13 +7,25 @@
     <meta name="robots" content="noindex, nofollow">
     <title>IA</title>
     <link rel="stylesheet" href="ia.css">
-    <!-- <script src="jquery-3.6.3.min.js"></script> -->
     <script src="ia.js"></script>
 </head>
 <body>
 <div class="is-wrapper">
     <header class="ia-header">
         <h1 class="ia-project-title"><a href="./ia.html">Project IA</a></h1>
+        <div class="ia-quick">
+            <div class="ia-link">
+                <a href="../uicomponent/dist/html/index.html" target="_blank">UI Compnent</a>
+            </div>
+            <div class="ia-theme">
+                <select data-ia="theme" onchange="IA.theme.change(this);">
+                    <option value="0">테마</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+        </div>
+
         <div class="ia-project-info">
             <div class="info-count">
                 <dl>
@@ -70,13 +82,6 @@
                     </dl>
                 </div>
             </div>
-        </div>
-        <div class="ia-theme">
-            <select data-ia="theme" onchange="IA.theme.change(this);">
-                <option value="0">테마</option>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
         </div>
     </header>
 
