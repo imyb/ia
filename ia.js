@@ -187,7 +187,6 @@ IA.tdNumber = (function() {
                 element.insertAdjacentHTML('afterbegin', '<td class="no"></td>');
             }
 
-            // if( element.style.display !== 'none' && element.closest(IA.SELECTOR.section).style.display != 'none' ) {
             if( element.hidden != true && element.closest(IA.SELECTOR.section).hidden != true ) {
                 element.querySelector(IA.SELECTOR.td_no).innerText = count;
                 count++;
