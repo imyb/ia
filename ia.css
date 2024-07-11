@@ -80,6 +80,7 @@ html {
     --option-select-active-color : #000;
     --info-count-tit-color : #666;
     --info-count-num-color : #000;
+    --section-border : #ddd;
     --table-bg : #fff;
     --table-border : #ddd;
     --th-bg : #f8f8f8;
@@ -126,6 +127,7 @@ html.theme-dark {
     --option-select-active-color : #fff;
     --info-count-tit-color : #888;
     --info-count-num-color : #eee;
+    --section-border : #333;
     --table-bg : #202020;
     --table-border : #141414;
     --th-bg : #444;
@@ -178,6 +180,7 @@ body.is-loading:after {
     background-color: var(--header-bg);
     box-shadow: 0px -10px 20px rgb(0, 0, 0, 0.4);
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
 }
 .ia-quick {
     display: flex;
@@ -401,6 +404,9 @@ body.is-loading:after {
 .ia-section .ia-section-table tbody tr:first-child td {
     border-top: 0;
 }
+.ia-section .ia-section-table tbody tr[hidden] {
+    display: none;
+}
 
 .ia-section .ia-section-table th {
     height: 3.0rem;
@@ -516,7 +522,10 @@ body.is-loading:after {
     .ia-project-info .info-option {
         margin: 0;
     }
-
+    .ia-section:not([hidden]) + .ia-section {
+        padding-top: 3rem;
+        border-top: .1rem dotted var(--section-border);
+    }
     .ia-section .ia-section-table thead {
         display: none;
     }
