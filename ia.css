@@ -362,7 +362,7 @@ body.is-loading:after {
 .ia-section .ia-section-table thead {
     z-index: 2;
     position: sticky;
-    top: var(--header-height);
+    top: calc(var(--header-height) * 0.1);
     box-shadow: inset 0 1px 0 var(--table-border), inset 0 -1px 0 var(--table-border);
 }
 
